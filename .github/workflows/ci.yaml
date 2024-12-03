@@ -25,7 +25,6 @@ jobs:
           submodules: recursive
 
       - name: Setup Tenderly Virtual TestNet
-        id: vnet
         uses: Tenderly/vnet-github-action@v1.0.6
         with:
           access_key: ${{ secrets.TENDERLY_ACCESS_KEY }}
@@ -41,7 +40,6 @@ jobs:
 
       - name: Fund Account
         env:
-#          TENDERLY_ADMIN_RPC_URL: ${{ steps.vnet.outputs.TENDERLY_ADMIN_RPC_URL }}
           TENDERLY_ADMIN_RPC_URL: ${{ env.TENDERLY_ADMIN_RPC_URL }}
           ADMIN_WALLET: ${{ vars.ADMIN_WALLET }}
         run: |
@@ -52,7 +50,7 @@ jobs:
               "jsonrpc": "2.0",
               "method": "tenderly_setBalance",
               "params": [
-                "$ADMIN_WALLET",
+                "${{ vars.ADMIN_WALLET }}",
                 "0xDE0B6B3A7640000"
               ],
               "id": "1234"

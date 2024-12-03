@@ -18,10 +18,11 @@ jobs:
 #          forge test -vvv
 
   deploy:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Tenderly Virtual TestNet
         uses: Tenderly/vnet-github-action@v1.0.6
@@ -37,8 +38,15 @@ jobs:
           explorer_verification_type: 'bytecode'
           sync_state_enabled: false
 
-      - name: Deploy Contracts
+      - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Foundry Build
+        run: |
+          forge --version
+          forge build --sizes
+
+      - name: Deploy Contracts
         env:
           FOUNDRY_ETH_RPC_URL: ${{ env.TENDERLY_PUBLIC_RPC_URL }}
           FOUNDRY_VERIFIER_URL: ${{ env.TENDERLY_FOUNDRY_VERIFICATION_URL }}

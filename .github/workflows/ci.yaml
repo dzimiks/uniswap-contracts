@@ -38,6 +38,7 @@ jobs:
           sync_state_enabled: false
 
       - name: Deploy Contracts
+        uses: foundry-rs/foundry-toolchain@v1
         env:
           FOUNDRY_ETH_RPC_URL: ${{ env.TENDERLY_PUBLIC_RPC_URL }}
           FOUNDRY_VERIFIER_URL: ${{ env.TENDERLY_FOUNDRY_VERIFICATION_URL }}

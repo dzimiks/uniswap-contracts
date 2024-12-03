@@ -1,0 +1,50 @@
+name: Deploy to Tenderly Virtual TestNet
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Build and Test
+        run: |
+          forge build
+          forge test -vvv
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Tenderly Virtual TestNet
+        uses: Tenderly/vnet-github-action@v1.0.6
+        with:
+          access_key: ${{ secrets.TENDERLY_ACCESS_KEY }}
+          project_name: ${{ vars.TENDERLY_PROJECT_NAME }}
+          account_name: ${{ vars.TENDERLY_ACCOUNT_NAME }}
+          testnet_name: 'Uniswap VNet CI/CD'
+          network_id: 1
+          chain_id: 12345
+          block_number: 'latest'
+          explorer_enabled: true
+          explorer_verification_type: 'bytecode'
+          sync_state_enabled: false
+
+      - name: Deploy Contracts
+        env:
+          FOUNDRY_ETH_RPC_URL: ${{ env.TENDERLY_PUBLIC_RPC_URL }}
+          FOUNDRY_VERIFIER_URL: ${{ env.TENDERLY_FOUNDRY_VERIFICATION_URL }}
+        run: |
+          forge script script/deploy/Deploy-all.s.sol \
+            --rpc-url $FOUNDRY_ETH_RPC_URL \
+            --verifier-url $FOUNDRY_VERIFIER_URL \
+            --slow \
+            --broadcast \
+            --verify

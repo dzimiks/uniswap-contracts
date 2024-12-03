@@ -1,5 +1,5 @@
 name: Deploy to Tenderly Virtual TestNet
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   test:
@@ -49,10 +49,12 @@ jobs:
       - name: Deploy Contracts
         env:
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           FOUNDRY_ETH_RPC_URL: ${{ env.TENDERLY_PUBLIC_RPC_URL }}
           FOUNDRY_VERIFIER_URL: ${{ env.TENDERLY_FOUNDRY_VERIFICATION_URL }}
         run: |
           forge script script/deploy/Deploy-all.s.sol \
+            --private-key $PRIVATE_KEY \
             --rpc-url $FOUNDRY_ETH_RPC_URL \
             --verifier-url $FOUNDRY_VERIFIER_URL \
             --slow \

@@ -35,7 +35,7 @@ jobs:
           chain_id: 1
           block_number: 'latest'
           public_explorer: true
-          verification_visibility: 'bytecode'
+          verification_visibility: 'src'
           state_sync: false
 
       - name: Fund Account
@@ -51,7 +51,7 @@ jobs:
               "method": "tenderly_setBalance",
               "params": [
                 "${{ vars.ADMIN_WALLET }}",
-                "0xDE0B6B3A7640000"
+                "0x3635c9adc5dea00000"
               ],
               "id": "1234"
             }'

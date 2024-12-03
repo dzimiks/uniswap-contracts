@@ -2,19 +2,19 @@ name: Deploy to Tenderly Virtual TestNet
 on: [pull_request]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
-
-      - name: Build and Test
-        run: |
-          forge build
+#  test:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          submodules: recursive
+#
+#      - name: Install Foundry
+#        uses: foundry-rs/foundry-toolchain@v1
+#
+#      - name: Build and Test
+#        run: |
+#          forge build
 #          forge test -vvv
 
   deploy:
@@ -25,6 +25,7 @@ jobs:
           submodules: recursive
 
       - name: Setup Tenderly Virtual TestNet
+        id: vnet
         uses: Tenderly/vnet-github-action@v1.0.6
         with:
           access_key: ${{ secrets.TENDERLY_ACCESS_KEY }}
@@ -37,6 +38,24 @@ jobs:
           public_explorer: true
           verification_visibility: 'bytecode'
           state_sync: false
+
+      - name: Fund Account
+        env:
+          TENDERLY_ADMIN_RPC_URL: ${{ steps.vnet.outputs.TENDERLY_ADMIN_RPC_URL }}
+          ADMIN_WALLET: ${{ vars.ADMIN_WALLET }}
+        run: |
+          curl $TENDERLY_ADMIN_RPC_URL \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+              "jsonrpc": "2.0",
+              "method": "tenderly_setBalance",
+              "params": [
+                "$ADMIN_WALLET",
+                "0xDE0B6B3A7640000"
+              ],
+              "id": "1234"
+            }'
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1

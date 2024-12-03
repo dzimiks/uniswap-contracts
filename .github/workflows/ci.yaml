@@ -34,9 +34,9 @@ jobs:
           network_id: 1
           chain_id: 12345
           block_number: 'latest'
-          explorer_enabled: true
-          explorer_verification_type: 'bytecode'
-          sync_state_enabled: false
+          public_explorer: true
+          verification_visibility: 'bytecode'
+          state_sync: false
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1

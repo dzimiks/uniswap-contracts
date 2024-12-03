@@ -30,9 +30,9 @@ jobs:
           access_key: ${{ secrets.TENDERLY_ACCESS_KEY }}
           project_name: ${{ vars.TENDERLY_PROJECT_NAME }}
           account_name: ${{ vars.TENDERLY_ACCOUNT_NAME }}
-          testnet_name: 'Uniswap VNet CI/CD'
+          testnet_name: 'Uniswap VNet CI/CD ${{ github.run_id }}'
           network_id: 1
-          chain_id: 12345
+          chain_id: 1
           block_number: 'latest'
           public_explorer: true
           verification_visibility: 'bytecode'

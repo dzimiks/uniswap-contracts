@@ -41,7 +41,8 @@ jobs:
 
       - name: Fund Account
         env:
-          TENDERLY_ADMIN_RPC_URL: ${{ steps.vnet.outputs.TENDERLY_ADMIN_RPC_URL }}
+#          TENDERLY_ADMIN_RPC_URL: ${{ steps.vnet.outputs.TENDERLY_ADMIN_RPC_URL }}
+          TENDERLY_ADMIN_RPC_URL: ${{ vars.TENDERLY_ADMIN_RPC_URL }}
           ADMIN_WALLET: ${{ vars.ADMIN_WALLET }}
         run: |
           curl $TENDERLY_ADMIN_RPC_URL \

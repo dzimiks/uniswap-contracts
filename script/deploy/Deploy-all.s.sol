@@ -65,7 +65,7 @@ contract Deploy is Script {
 
         deployV3Contracts();
 
-        deployV4Contracts();
+        // deployV4Contracts();
 
         deployViewQuoterV3();
 
@@ -73,11 +73,12 @@ contract Deploy is Script {
 
         deployUtilsContracts();
 
-        deployUniversalRouter();
+        // deployUniversalRouter();
 
         vm.stopBroadcast();
 
-        if (vm.isContext(VmSafe.ForgeContext.ScriptBroadcast) && config.readBool('.rename')) {
+//        if (vm.isContext(VmSafe.ForgeContext.ScriptBroadcast) && config.readBool('.rename')) {
+        if (vm.isContext(VmSafe.ForgeContext.ScriptBroadcast)) {
             uint256 timestamp = vm.getBlockTimestamp();
             string memory output_filename = string.concat(
                 './script/deploy/tasks/', vm.toString(block.chainid), '/task-', vm.toString(timestamp), '.json'

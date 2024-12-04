@@ -7,9 +7,9 @@ on:
       - main
       - staging
       - dev
-  schedule:
-    # Run this workflow hourly at *:17 UTC
-    - cron: "17 * * * *"
+#  schedule:
+#    # Run this workflow hourly at *:17 UTC
+#    - cron: "17 * * * *"
 
 jobs:
   update-submodules:

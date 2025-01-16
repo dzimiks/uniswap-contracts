@@ -2,21 +2,6 @@ name: Deploy to Tenderly Virtual TestNet
 on: [pull_request]
 
 jobs:
-#  test:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#        with:
-#          submodules: recursive
-#
-#      - name: Install Foundry
-#        uses: foundry-rs/foundry-toolchain@v1
-#
-#      - name: Build and Test
-#        run: |
-#          forge build
-#          forge test -vvv
-
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +18,7 @@ jobs:
           testnet_name: 'Uniswap VNet CI/CD ${{ github.run_id }}'
           mode: 'CD'
           network_id: 1
-          chain_id: 12345
+          chain_id: 1
           block_number: 'latest'
           public_explorer: true
           verification_visibility: 'src'

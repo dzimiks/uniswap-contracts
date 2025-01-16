@@ -4,6 +4,9 @@ on: [pull_request]
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        network: ['1', '10']
     steps:
       - uses: actions/checkout@v4
         with:
@@ -17,8 +20,8 @@ jobs:
           account_name: ${{ vars.TENDERLY_ACCOUNT_NAME }}
           testnet_name: 'Uniswap VNet CI/CD ${{ github.run_id }}'
           mode: 'CD'
-          network_id: 1
-          chain_id: 1
+          network_id: ${{ matrix.network }}
+          chain_id: ${{ format('12345{0}', matrix.network) }}
           block_number: 'latest'
           public_explorer: true
           verification_visibility: 'src'

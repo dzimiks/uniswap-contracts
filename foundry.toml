@@ -83,7 +83,7 @@ sepolia = "https://sepolia.infura.io/v3/${INFURA_KEY}"
 
 [etherscan]
 sepolia = { key = "${ETHERSCAN_API_KEY}" }
-tenderly_vnet_eth = { key = "TENDERLY_ACCESS_KEY", chain = 123451, url = "${TENDERLY_PUBLIC_RPC_URL}/verify/etherscan" }
-tenderly_vnet_op = { key = "TENDERLY_ACCESS_KEY", chain = 1234510, url = "${TENDERLY_PUBLIC_RPC_URL}/verify/etherscan" }
+tenderly_vnet_eth = { key = "${TENDERLY_ACCESS_KEY}", chain = 123451, url = "${TENDERLY_PUBLIC_RPC_URL}/verify/etherscan" }
+tenderly_vnet_op = { key = "${TENDERLY_ACCESS_KEY}", chain = 1234510, url = "${TENDERLY_PUBLIC_RPC_URL}/verify/etherscan" }
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
